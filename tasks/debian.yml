@@ -1,0 +1,35 @@
+- name: Update apt cache
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Install common apt packages
+  become: yes
+  apt:
+    name:
+      - build-essential
+      - bat
+      - curl
+      - delta
+      - direnv
+      - fzf
+      - gh
+      - git
+      - htop
+      - lsd
+      - nala
+      - neovim
+      - tldr
+      - tree
+      - wget
+      - xz-utils
+      - zoxide
+      - zsh
+    state: present
+
+- name: Install linuxbrew
+  import_tasks: apps/linuxbrew.yml
+- name: Install Oh My Zsh
+  import_tasks: apps/oh-my-zsh.yml
+- name: Install chezmoi
+  import_tasks: apps/chezmoi.yml

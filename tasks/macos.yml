@@ -1,0 +1,7 @@
+- name: Install packages with brew
+  become: yes
+  community.general.homebrew:
+    name:
+      - git
+      - tmux
+    state: present
