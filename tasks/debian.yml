@@ -1,10 +1,10 @@
 - name: Update apt cache
-  become: yes
+  become: true
   apt:
     update_cache: yes
 
 - name: Install common apt packages
-  become: yes
+  become: true
   apt:
     name:
       - build-essential
@@ -31,5 +31,5 @@
   import_tasks: apps/linuxbrew.yml
 - name: Install Oh My Zsh
   import_tasks: apps/oh-my-zsh.yml
-- name: Install chezmoi
+- name: Install Chezmoi
   import_tasks: apps/chezmoi.yml

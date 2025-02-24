@@ -1,5 +1,5 @@
 - name: Gather facts about the system
-  become: yes
+  become: true
   setup:
     gather_subset:
       - "!user"

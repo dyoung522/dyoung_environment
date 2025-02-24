@@ -1,7 +1,19 @@
 - name: Install packages with brew
-  become: yes
   community.general.homebrew:
     name:
+      - bat
+      - curl
+      - delta
+      - direnv
+      - fzf
+      - gh
       - git
+      - htop
+      - lsd
+      - neovim
       - tmux
+      - tree
+      - wget
+      - zoxide
+      - zsh
     state: present
