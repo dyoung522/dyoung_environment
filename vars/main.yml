@@ -56,5 +56,6 @@ packages:
       - xz-utils
       - zoxide
       - zsh
+      - zsh-syntax-highlighting
     kegs:
       - chezmoi
