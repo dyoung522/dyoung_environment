@@ -1,19 +1,6 @@
 - name: Install packages with brew
-  community.general.homebrew:
-    name:
-      - bat
-      - curl
-      - delta
-      - direnv
-      - fzf
-      - gh
-      - git
-      - htop
-      - lsd
-      - neovim
-      - tmux
-      - tree
-      - wget
-      - zoxide
-      - zsh
-    state: present
+  import_tasks: apps/darwin/brew.yml
+- name: Install Oh My Zsh
+  import_tasks: apps/oh-my-zsh.yml
+- name: Install Chezmoi
+  import_tasks: apps/darwin/chezmoi.yml

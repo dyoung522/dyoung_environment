@@ -1,3 +1,60 @@
 ---
 # vars file for dyoung-environment
 github_username: "dyoung522"
+packages:
+  darwin:
+    casks:
+      - 1password-cli
+      - alfred
+      - docker
+      - kitty
+      - obsidian
+      - visual-studio-code
+    kegs:
+      - autoconf
+      - bat
+      - curl
+      - delta
+      - direnv
+      - docker-compose
+      - fzf
+      - gh
+      - git
+      - go
+      - htop
+      - jq
+      - lsd
+      - neovim
+      - nmap
+      - openssl
+      - rbenv
+      - ruby-build
+      - ssh-copy-id
+      - tmux
+      - tree
+      - wget
+      - zoxide
+      - zsh
+      - zsh-syntax-highlighting
+  debian:
+    apps:
+      - build-essential
+      - bat
+      - curl
+      - delta
+      - direnv
+      - fzf
+      - gh
+      - git
+      - htop
+      - lsd
+      - nala
+      - neovim
+      - tldr
+      - tree
+      - wget
+      - xz-utils
+      - zoxide
+      - zsh
+    kegs:
+      - chezmoi

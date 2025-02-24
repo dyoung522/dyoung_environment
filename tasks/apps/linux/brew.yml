@@ -11,11 +11,31 @@
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
         dest: /tmp/brew_install.sh
-        mode: '775'
+        mode: "775"
     - name: Run Installer Script
       ansible.builtin.shell: NONINTERACTIVE=1 /tmp/brew_install.sh
 
 - name: Set LinuxBrew Executable Path
   ansible.builtin.set_fact:
-    linuxbrew_executable: /home/linuxbrew/.linuxbrew/bin/brew
-    linuxbrew_path: /home/linuxbrew/.linuxbrew/bin
+    homebrew_executable: /home/linuxbrew/.linuxbrew/bin/brew
+    homebrew_path: /home/linuxbrew/.linuxbrew/bin
+
+- name: Install LinuxBrew Kegs
+  when: brew.stat.exists
+  block:
+    - name: Updating Homebrew
+      homebrew:
+        update_homebrew: true
+
+    - name: Upgrading Homebrew Packages
+      homebrew:
+        upgrade_all: true
+      register: result
+      until: result is successful
+
+    - name: Installing Homebrew Packages
+      homebrew:
+        name: "{{ packages.debian.kegs }}"
+        state: present
+      register: result
+      until: result is successful

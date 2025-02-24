@@ -1,0 +1,6 @@
+- name: Install Chezmoi
+  block:
+    - name: Install Chezmoi
+      command: brew install chezmoi
+    - name: Initialize Chezmoi
+      command: chezmoi init --apply {{ github_username }}/dotfiles.git

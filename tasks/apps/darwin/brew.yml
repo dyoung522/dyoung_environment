@@ -1,0 +1,38 @@
+#  pre_tasks:
+- name: Run Homebrew pre-tasks
+  block:
+    - name: Ensuring Homebrew Is Installed
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: homebrew_check
+
+    - name: Installing Homebrew
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      when: not homebrew_check.stat.exists
+
+#  tasks:
+- name: Run main brew tasks
+  when: homebrew_check.stat.exists
+  block:
+    - name: Updating Homebrew
+      homebrew:
+        update_homebrew: true
+
+    - name: Upgrading Homebrew Packages
+      homebrew:
+        upgrade_all: true
+      register: result
+      until: result is successful
+
+    - name: Installing Homebrew Cask Packages
+      homebrew_cask:
+        name: "{{ packages.darwin.casks }}"
+        state: present
+      register: result
+
+    - name: Installing Homebrew Packages
+      homebrew:
+        name: "{{ packages.darwin.kegs }}"
+        state: present
+      register: result
+      until: result is successful
