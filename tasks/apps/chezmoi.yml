@@ -1,0 +1,15 @@
+# code: language=ansible
+
+# Installing [Chezmoi](https://www.chezmoi.io/)
+- name: Install & Initialize Chezmoi
+  when: brew.stat.exists
+  block:
+    - name: Install Chezmoi
+      community.general.homebrew:
+        name: "chezmoi"
+        state: present
+
+    - name: Initialize Chezmoi
+      ansible.builtin.command:
+        cmd: "{{ homebrew_bin_path }}/chezmoi init --apply https://github.com/{{ github_username }}/dotfiles.git"
+        creates: ".config/chezmoi"

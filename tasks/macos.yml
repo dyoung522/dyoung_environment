@@ -1,6 +1,8 @@
+# code: language=ansible
+
 - name: Install packages with brew
-  import_tasks: apps/darwin/brew.yml
+  ansible.builtin.import_tasks: apps/darwin/brew.yml
 - name: Install Oh My Zsh
-  import_tasks: apps/oh-my-zsh.yml
+  ansible.builtin.import_tasks: apps/oh-my-zsh.yml
 - name: Install Chezmoi
-  import_tasks: apps/darwin/chezmoi.yml
+  ansible.builtin.import_tasks: apps/chezmoi.yml

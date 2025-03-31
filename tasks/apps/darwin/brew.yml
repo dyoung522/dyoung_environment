@@ -1,37 +1,45 @@
+# code: language=ansible
+
 #  pre_tasks:
 - name: Run Homebrew pre-tasks
   block:
+    - name: Set HomeBrew Executable Path
+      ansible.builtin.set_fact:
+        homebrew_bin_path: /opt/homebrew/bin
+
     - name: Ensuring Homebrew Is Installed
-      stat:
+      ansible.builtin.stat:
         path: /opt/homebrew/bin/brew
-      register: homebrew_check
+      register: homebrew_executable
 
     - name: Installing Homebrew
-      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      when: not homebrew_check.stat.exists
+      ansible.builtin.command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      args:
+        creates: "{{ homebrew_executable.stat.path }}"
+      when: not homebrew_executable.stat.exists
 
 #  tasks:
 - name: Run main brew tasks
   when: homebrew_check.stat.exists
   block:
     - name: Updating Homebrew
-      homebrew:
+      community.general.homebrew:
         update_homebrew: true
 
     - name: Upgrading Homebrew Packages
-      homebrew:
+      community.general.homebrew:
         upgrade_all: true
       register: result
       until: result is successful
 
     - name: Installing Homebrew Cask Packages
-      homebrew_cask:
+      community.general.homebrew_cask:
         name: "{{ packages.darwin.casks }}"
         state: present
       register: result
 
     - name: Installing Homebrew Packages
-      homebrew:
+      community.general.homebrew:
         name: "{{ packages.darwin.kegs }}"
         state: present
       register: result

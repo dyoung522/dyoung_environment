@@ -1,5 +1,7 @@
+# code: language=ansible
+
 - name: Install Oh My Zsh # noqa: latest
-  git:
+  ansible.builtin.git:
     repo: https://github.com/ohmyzsh/ohmyzsh.git
     dest: ~/.oh-my-zsh
     depth: 1
@@ -7,9 +9,10 @@
     update: true
 
 - name: Install Powerlevel10k theme
-  git:
+  ansible.builtin.git:
     repo: https://github.com/romkatv/powerlevel10k.git
     dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
     depth: 1
+    version: master
     clone: false
     update: true

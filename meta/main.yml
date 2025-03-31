@@ -1,9 +1,16 @@
 galaxy_info:
   author: Donovan C. Young
-  description: dyoung-environment
+  description: dyoung_environment
   company: NerdWerx.io
   license: MIT
   min_ansible_version: "2.1"
+  platforms:
+    - name: MacOSX
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:

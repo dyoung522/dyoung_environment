@@ -1,10 +1,12 @@
-# Installs [HomeBrew](https://brew.sh/) prompt
-- name: Check if HomeBrew is installed
+# code: language=ansible
+
+# Installs LinuxBrew
+- name: Check if LinuxBrew is installed
   ansible.builtin.stat:
     path: /home/linuxbrew/.linuxbrew/bin/brew
   register: brew
 
-- name: Download & Install HomeBrew
+- name: Download & Install LinuxBrew
   when: not brew.stat.exists
   block:
     - name: Download Installer Script
@@ -13,28 +15,30 @@
         dest: /tmp/brew_install.sh
         mode: "775"
     - name: Run Installer Script
-      ansible.builtin.shell: NONINTERACTIVE=1 /tmp/brew_install.sh
+      ansible.builtin.command: /tmp/brew_install.sh
+      args:
+        creates: /home/linuxbrew/.linuxbrew/bin/brew
 
 - name: Set LinuxBrew Executable Path
   ansible.builtin.set_fact:
     homebrew_executable: /home/linuxbrew/.linuxbrew/bin/brew
-    homebrew_path: /home/linuxbrew/.linuxbrew/bin
+    homebrew_bin_path: /home/linuxbrew/.linuxbrew/bin
 
 - name: Install LinuxBrew Kegs
   when: brew.stat.exists
   block:
     - name: Updating Homebrew
-      homebrew:
+      community.general.homebrew:
         update_homebrew: true
 
     - name: Upgrading Homebrew Packages
-      homebrew:
+      community.general.homebrew:
         upgrade_all: true
       register: result
       until: result is successful
 
     - name: Installing Homebrew Packages
-      homebrew:
+      community.general.homebrew:
         name: "{{ packages.debian.kegs }}"
         state: present
       register: result

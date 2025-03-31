@@ -1,5 +1,5 @@
 ---
-# vars file for dyoung-environment
+# vars file for dyoung_environment
 github_username: "dyoung522"
 packages:
   darwin:

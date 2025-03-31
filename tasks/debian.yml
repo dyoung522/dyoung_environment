@@ -1,17 +1,19 @@
+# code: language=ansible
+
 - name: Update apt cache
   become: true
-  apt:
-    update_cache: yes
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install common apt packages
   become: true
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages.debian.apps }}"
     state: present
 
-- name: Install Oh My Zsh
-  import_tasks: apps/oh-my-zsh.yml
 - name: Install LinuxBrew
-  import_tasks: apps/linux/brew.yml
+  ansible.builtin.import_tasks: apps/linux/brew.yml
+- name: Install Oh My Zsh
+  ansible.builtin.import_tasks: apps/oh-my-zsh.yml
 - name: Install Chezmoi
-  import_tasks: apps/linux/chezmoi.yml
+  ansible.builtin.import_tasks: apps/chezmoi.yml
